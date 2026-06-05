@@ -1,0 +1,29 @@
+name: Build English Handwriting Book
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-book:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Generate PDF
+        run: python main.py
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: english-handwriting-practice-book
+          path: build/english_handwriting_practice_book.pdf
